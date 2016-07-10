@@ -1,0 +1,20 @@
+p#notice
+  = notice
+
+p
+  strong Title:
+  = @page.title
+
+p
+  strong Content:
+  = @page.content
+
+.add-pages
+  = link_to 'Add page', new_page_path
+
+.links
+  .edit
+    = link_to 'Edit', edit_page_path(@page)
+  .back
+    = link_to 'Back', pages_path
+
