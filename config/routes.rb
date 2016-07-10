@@ -1,5 +1,23 @@
 Rails.application.routes.draw do
+
+
   resources :pages
+
+  page_name = /(\w+\/?)+/
+  controller :pages, page_name: page_name do
+    get '/:page_name/edit' => 'pages#edit_test', as: :page_edit_path
+  end
+
+  controller :pages, page_name: page_name do
+    get '/:page_name/add' => 'pages#add_test', as: :page_add_path
+  end
+
+  controller :pages, page_name: page_name do
+    get '/:page_name' => 'pages#show_test', as: :page_show_path
+  end
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

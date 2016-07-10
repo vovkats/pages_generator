@@ -6,7 +6,24 @@ class PagesController < ApplicationController
   end
 
   def show
+
   end
+
+  def show_test
+    render text: params
+  end
+
+  def add_test
+    render text: params
+  end
+
+
+  def edit_test
+    render text: params
+  end
+
+
+
 
 
   def new
@@ -55,10 +72,10 @@ class PagesController < ApplicationController
 
   private
     def set_page
-      @page = Page.find(params[:id])
+      @page = Page.friendly.find(params[:id])
     end
 
     def page_params
-      params.require(:page).permit(:title, :content, :root_id)
+      params.require(:page).permit(:name, :content, :root_id)
     end
 end
