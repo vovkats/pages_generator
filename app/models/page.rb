@@ -6,6 +6,9 @@ class Page < ActiveRecord::Base
 
   scope :root_pages, -> { where(root_id: nil) }
 
+  validates :name, presence: true
+  validate :page_name
+
   def main?
     root_id.nil?
   end
@@ -14,4 +17,13 @@ class Page < ActiveRecord::Base
     Page.find_by(id: root_id)
   end
 
+  private
+
+  def page_name
+    return true unless root_id
+
+    if parent.sub_pages.where(name: name).present?
+      errors[:name] << 'name must be uniq'
+    end
+  end
 end
