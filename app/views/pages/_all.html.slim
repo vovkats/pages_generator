@@ -1,0 +1,12 @@
+- pages.each do |page|
+  .wrapper-pages
+    .page-name data = page.id
+      = link_to page.name, page_path(page.id)
+      '
+      = link_to 'Add', add_page_path(page.id)
+      '
+      = link_to 'Edit', edit_page_path(page.id)
+
+    .sub-pages
+    - if page.sub_pages.present?
+      = render partial: 'pages/all', locals: { pages: page.sub_pages }

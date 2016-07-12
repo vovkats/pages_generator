@@ -3,6 +3,8 @@ p#notice
 
 h1 Listing Pages
 
+div
+  = render partial: 'pages/all', locals: { pages: @root_pages }
 table
   thead
     tr
@@ -20,11 +22,5 @@ table
         td = link_to 'Show', page
         td = link_to 'Edit', edit_page_path(page)
         td = link_to 'Destroy', page, method: :delete, data: { confirm: 'Are you sure?' }
-
-
-
-
-
-br
-
-= link_to 'New Page', new_page_path
+.new-page
+  = link_to 'New Page', new_page_path

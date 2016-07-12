@@ -1,78 +1,82 @@
 class PagesController < ApplicationController
-  before_action :set_page, only: [:show, :edit, :update, :destroy]
+  before_action :find_page, only: [:show, :edit, :update, :destroy,
+                                   :add]
 
   def index
     @pages = Page.all
+    @root_pages = Page.root_pages
   end
 
   def show
-
+    render 'pages/show'
   end
 
-  def show_test
-    render text: params
+  def add
+    @url = "/#{params[:page_name]}"
+    @action = :post
+    @page = @page.sub_pages.build if @page.id
+
+    render 'pages/new'
   end
-
-  def add_test
-    render text: params
-  end
-
-
-  def edit_test
-    render text: params
-  end
-
-
-
-
 
   def new
+    @url = "/#{params[:page_name]}"
+    @action = :post
+
     @page = Page.new
   end
 
   def edit
-
+    @url = "/#{params[:page_name]}"
+    @method = :patch
+    render 'pages/edit'
   end
 
-
   def create
+    @url = params[:page_name] ? "/#{params[:page_name]}/" : '/'
+    @action = :post
+
     @page = Page.new(page_params)
 
-    respond_to do |format|
-      if @page.save
-        format.html { redirect_to @page, notice: 'Page was successfully created.' }
-        format.json { render :show, status: :created, location: @page }
-      else
-        format.html { render :new }
-        format.json { render json: @page.errors, status: :unprocessable_entity }
-      end
+    if @page.save
+      redirect_to @url + @page.name, notice: 'Page was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @page.update(page_params)
-        format.html { redirect_to @page, notice: 'Page was successfully updated.' }
-        format.json { render :show, status: :ok, location: @page }
-      else
-        format.html { render :edit }
-        format.json { render json: @page.errors, status: :unprocessable_entity }
-      end
+    @url ="/#{params[:page_name]}"
+    @method = :patch
+
+    if @page.update(page_params)
+      redirect_to @url, notice: 'Page was successfully updated.'
+    else
+      render 'pages/edit'
     end
   end
 
 
   def destroy
     @page.destroy
-    respond_to do |format|
-      format.html { redirect_to pages_url, notice: 'Page was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to pages_url
   end
 
   private
-    def set_page
-      @page = Page.friendly.find(params[:id])
+
+    def find_page
+      if params[:page_name]
+        url_parser = UrlParserService.new(params)
+        url_parser.parse
+
+        page_service = PageService.new(url_parser.page_names)
+        @page = page_service.find
+      else
+        @page = Page.new
+      end
+    rescue ActiveRecord::RecordNotFound => e
+      flash[:notice] = "Page with name #{e} not found"
+      redirect_to root_path and return
     end
 
     def page_params
