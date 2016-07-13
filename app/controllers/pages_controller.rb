@@ -12,45 +12,34 @@ class PagesController < ApplicationController
   end
 
   def add
-    @url = "/#{params[:page_name]}"
-    @action = :post
     @page = @page.sub_pages.build if @page.id
 
     render 'pages/new'
   end
 
   def new
-    @url = "/#{params[:page_name]}"
-    @action = :post
-
     @page = Page.new
   end
 
   def edit
-    @url = "/#{params[:page_name]}"
-    @method = :patch
     render 'pages/edit'
   end
 
   def create
-    @url = params[:page_name] ? "/#{params[:page_name]}/" : '/'
     @action = :post
 
     @page = Page.new(page_params)
 
     if @page.save
-      redirect_to @url + @page.name, notice: 'Page was successfully created.'
+      redirect_to PathService.show_path(@page.id), notice: 'Page was successfully created.'
     else
       render :new
     end
   end
 
   def update
-    @url ="/#{params[:page_name]}"
-    @method = :patch
-
     if @page.update(page_params)
-      redirect_to @url, notice: 'Page was successfully updated.'
+      redirect_to PathService.show_path(@page.id), notice: 'Page was successfully updated.'
     else
       render 'pages/edit'
     end
