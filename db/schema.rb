@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160711101327) do
+ActiveRecord::Schema.define(version: 20160713140950) do
 
   create_table "pages", force: :cascade do |t|
     t.string   "name"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20160711101327) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "slug"
+    t.text     "path"
   end
 
   add_index "pages", ["name", "root_id"], name: "index_pages_on_name_and_root_id"

@@ -1,10 +1,8 @@
 class PagesController < ApplicationController
-  before_action :find_page, only: [:show, :edit, :update, :destroy,
-                                   :add]
+  before_action :find_page, only: [:show, :edit, :update, :destroy, :add]
 
   def index
-    @pages = Page.all
-    @root_pages = Page.root_pages
+    @root_pages = Page.root_pages.select(:id, :name, :root_id, :path)
   end
 
   def show
@@ -31,7 +29,9 @@ class PagesController < ApplicationController
     @page = Page.new(page_params)
 
     if @page.save
-      redirect_to PathService.show_path(@page.id), notice: 'Page was successfully created.'
+      @page.update!(path: PathService.form_path(@page))
+
+      redirect_to PathService.show_path_v2(@page.id, @page.name, @page.path), notice: 'Page was successfully created.'
     else
       render :new
     end

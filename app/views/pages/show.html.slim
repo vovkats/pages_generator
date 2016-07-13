@@ -10,11 +10,11 @@ p
   = @page.content
 
 .add-pages
-  = link_to 'Add page',  add_page_path(@page)
+  = link_to 'Add page',  add_page_path(@page.id, @page.name, @page.path)
 
 .links
   .edit
-    = link_to 'Edit', edit_page_path(@page)
+    = link_to 'Edit', edit_page_path(@page.id, @page.name, @page.path)
   .back
     = link_to 'Back', pages_path
 

@@ -3,5 +3,5 @@ h1 Editing Page
 = render 'form'
 
 .links
-  = link_to 'Show', @page
+  = link_to 'Show', show_page_path(@page.id, @page.name, @page.path)
   = link_to 'Back', pages_path

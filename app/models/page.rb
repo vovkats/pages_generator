@@ -6,8 +6,10 @@ class Page < ActiveRecord::Base
 
   scope :root_pages, -> { where(root_id: nil) }
 
-  validates :name, presence: true
-  validate :page_name
+  # validates :name, presence: true
+  # validate :page_name
+
+  serialize :path, Hash
 
   def main?
     root_id.nil?
