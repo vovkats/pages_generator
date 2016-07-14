@@ -2,7 +2,9 @@ class PagesController < ApplicationController
   before_action :find_page, only: [:show, :edit, :update, :destroy, :add]
 
   def index
-    @root_pages = Page.root_pages.select(:id, :name, :root_id, :path)
+    tree_service = TreeService.new(Page.all)
+    tree_service.form_tree
+    @root_pages = tree_service.tree
   end
 
   def show
@@ -38,6 +40,7 @@ class PagesController < ApplicationController
   end
 
   def update
+    # VOVKA update paths if name of page was changed
     if @page.update(page_params)
       redirect_to PathService.show_path(@page.id), notice: 'Page was successfully updated.'
     else

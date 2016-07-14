@@ -1,6 +1,6 @@
-- pages.each do |page|
+- current_pages.each do |page|
   .wrapper-pages
-    .page-name data = page.id
+    .page-name data-id = page.id
       = link_to page.name, show_page_path(page.id, page.name, page.path)
       '
       = link_to 'Add', add_page_path(page.id, page.name, page.path)
@@ -8,5 +8,5 @@
       = link_to 'Edit', edit_page_path(page.id, page.name, page.path)
 
     .sub-pages
-    - if page.sub_pages.present?
-      = render partial: 'pages/all', locals: { pages: page.sub_pages }
+    - if all_pages.has_key?("#{page.id}")
+      = render partial: 'pages/all', locals: { all_pages: all_pages, current_pages: all_pages["#{page.id}"]}

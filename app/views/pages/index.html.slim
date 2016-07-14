@@ -4,5 +4,13 @@ p#notice
 h1 Listing Pages
 
 div
-  = render partial: 'pages/all', locals: { pages: @root_pages }
+  - @root_pages[:root_objects].each do |page|
+    .wrapper-pages
+      .page-name
+        = link_to page.name, show_page_path(page.id, page.name, page.path)
+        '
+        = link_to 'Add', add_page_path(page.id, page.name, page.path)
+        '
+        = link_to 'Edit', edit_page_path(page.id, page.name, page.path)
+      = render partial: 'pages/all', locals: { all_pages: @root_pages, current_pages: @root_pages["#{page.id}"] }
 
