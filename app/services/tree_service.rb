@@ -8,6 +8,7 @@ class TreeService
 
   def form_tree
     @tree[:root_objects] = []
+
     @pages.each do |page|
       if page.main?
         @tree[:root_objects] << page

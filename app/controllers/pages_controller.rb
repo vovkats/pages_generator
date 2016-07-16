@@ -48,7 +48,6 @@ class PagesController < ApplicationController
     end
   end
 
-
   def destroy
     @page.destroy
     redirect_to pages_url
@@ -66,7 +65,7 @@ class PagesController < ApplicationController
       else
         @page = Page.new
       end
-    rescue ActiveRecord::RecordNotFound => e
+    rescue PageService::PageNotFound => e
       flash[:notice] = "Page with name #{e} not found"
       redirect_to root_path and return
     end

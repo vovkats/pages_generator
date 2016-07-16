@@ -13,8 +13,7 @@ class PathService
     end
 
     def form_path(page)
-
-      if page && page.parent
+      if page.parent
         { page_id: page.id, page_name: page.name, root_id: form_path(page.parent)}
       else
         { page_id: page.id, page_name: page.name }
