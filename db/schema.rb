@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713140950) do
+ActiveRecord::Schema.define(version: 20160716082738) do
 
   create_table "pages", force: :cascade do |t|
     t.string   "name"
-    t.string   "content"
+    t.text     "content"
     t.integer  "root_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

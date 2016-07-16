@@ -1,13 +1,17 @@
 p#notice
   = notice
 
-p
-  strong Name:
+.page-name
+  span
+    'Name:
+
   = @page.name
 
-p
-  strong Content:
-  = @page.content
+.content
+  .content-label
+    |Content
+  .processed_content
+    = @page.processed_content
 
 .add-pages
   = link_to 'Add page',  add_page_path(@page.id, @page.name, @page.path)

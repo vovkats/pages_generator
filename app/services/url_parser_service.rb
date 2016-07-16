@@ -1,17 +1,12 @@
 class UrlParserService
 
-  attr_reader :page_name, :page_names
+  attr_reader :pages_names
 
   def initialize(params = {})
-    @page_name = params.fetch(:page_name, {})
+    @pages_names = params.fetch(:page_name, {})
   end
 
-  def parse
-    @page_names = []
-    @page_name.split('/').each do |page|
-      @page_names << page
-    end
-
+  def pages_names
+    @pages_names.split('/').find_all { |page_name| page_name != 'pages'}
   end
-
 end
