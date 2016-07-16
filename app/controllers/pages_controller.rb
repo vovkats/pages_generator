@@ -42,7 +42,7 @@ class PagesController < ApplicationController
   def update
     # VOVKA update paths if name of page was changed
     if @page.update(page_params)
-      redirect_to PathService.show_path(@page.id), notice: 'Page was successfully updated.'
+      redirect_to PathService.show_path_v2(@page.id, @page.name, @page.path), notice: 'Page was successfully updated.'
     else
       render 'pages/edit'
     end
@@ -58,10 +58,8 @@ class PagesController < ApplicationController
     def find_page
       if params[:page_name]
         url_parser = UrlParserService.new(params)
-        url_parser.parse
-
-        page_service = PageService.new(url_parser.page_names)
-        @page = page_service.find
+        page_service = PageService.new(url_parser.pages_names)
+        @page = page_service.find.decorate
       else
         @page = Page.new
       end
