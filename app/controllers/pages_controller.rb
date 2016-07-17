@@ -8,6 +8,9 @@ class PagesController < ApplicationController
   end
 
   def show
+    tree_service = TreeService.new(Page.all)
+    tree_service.form_tree
+    @root_pages = tree_service.tree
     render 'pages/show'
   end
 
