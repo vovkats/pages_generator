@@ -26,9 +26,7 @@ class PagesController < ApplicationController
   end
 
   def create
-    @action = :post
-
-    @page = Page.new(page_params)
+    @page = Page.new(page_params.merge(name: params[:page][:name]))
 
     if @page.save
       @page.update!(path: PathService.form_path(@page))
@@ -40,7 +38,6 @@ class PagesController < ApplicationController
   end
 
   def update
-    # VOVKA update paths if name of page was changed
     if @page.update(page_params)
       redirect_to PathService.show_path(@page.id, @page.name, @page.path), notice: 'Page was successfully updated.'
     else
@@ -69,6 +66,6 @@ class PagesController < ApplicationController
     end
 
     def page_params
-      params.require(:page).permit(:name, :content, :root_id)
+      params.require(:page).permit(:title, :content, :root_id)
     end
 end
