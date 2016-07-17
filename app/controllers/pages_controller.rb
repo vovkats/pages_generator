@@ -33,7 +33,7 @@ class PagesController < ApplicationController
     if @page.save
       @page.update!(path: PathService.form_path(@page))
 
-      redirect_to PathService.show_path_v2(@page.id, @page.name, @page.path), notice: 'Page was successfully created.'
+      redirect_to PathService.show_path(@page.id, @page.name, @page.path), notice: 'Page was successfully created.'
     else
       render :new
     end
@@ -42,7 +42,7 @@ class PagesController < ApplicationController
   def update
     # VOVKA update paths if name of page was changed
     if @page.update(page_params)
-      redirect_to PathService.show_path_v2(@page.id, @page.name, @page.path), notice: 'Page was successfully updated.'
+      redirect_to PathService.show_path(@page.id, @page.name, @page.path), notice: 'Page was successfully updated.'
     else
       render 'pages/edit'
     end

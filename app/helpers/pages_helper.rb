@@ -1,6 +1,6 @@
 module PagesHelper
   def show_page_path(page_id, page_name, page_path)
-    PathService.show_path_v2(page_id, page_name, page_path)
+    PathService.show_path(page_id, page_name, page_path)
   end
 
   def edit_page_path(page_id, page_name, page_path)
@@ -20,7 +20,7 @@ module PagesHelper
       end
 
     if page
-      PathService.show_path_v2(page.id, page.name, page.path)
+      PathService.show_path(page.id, page.name, page.path)
     else
       '/'
     end
