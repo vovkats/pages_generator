@@ -7,6 +7,6 @@ class UrlParserService
   end
 
   def pages_names
-    @pages_names.split('/').find_all { |page_name| page_name != 'pages'}
+    @pages_names.split('/')
   end
 end

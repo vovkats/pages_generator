@@ -8,6 +8,9 @@ class PagesController < ApplicationController
   end
 
   def show
+    tree_service = TreeService.new(Page.all)
+    tree_service.form_tree
+    @root_pages = tree_service.tree
     render 'pages/show'
   end
 
@@ -26,23 +29,20 @@ class PagesController < ApplicationController
   end
 
   def create
-    @action = :post
-
-    @page = Page.new(page_params)
+    @page = Page.new(page_params.merge(name: params[:page][:name]))
 
     if @page.save
       @page.update!(path: PathService.form_path(@page))
 
-      redirect_to PathService.show_path_v2(@page.id, @page.name, @page.path), notice: 'Page was successfully created.'
+      redirect_to PathService.show_path(@page.id, @page.name, @page.path), notice: 'Page was successfully created.'
     else
       render :new
     end
   end
 
   def update
-    # VOVKA update paths if name of page was changed
     if @page.update(page_params)
-      redirect_to PathService.show_path_v2(@page.id, @page.name, @page.path), notice: 'Page was successfully updated.'
+      redirect_to PathService.show_path(@page.id, @page.name, @page.path), notice: 'Page was successfully updated.'
     else
       render 'pages/edit'
     end
@@ -69,6 +69,6 @@ class PagesController < ApplicationController
     end
 
     def page_params
-      params.require(:page).permit(:name, :content, :root_id)
+      params.require(:page).permit(:title, :content, :root_id)
     end
 end

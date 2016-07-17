@@ -1,6 +1,9 @@
 p#notice
   = notice
 
+.tree
+  - if @root_pages["#{@page.id}"]
+    = render partial: 'pages/all', locals: { all_pages: @root_pages, current_pages: @root_pages["#{@page.id}"] }
 .page-name
   span
     'Name:
