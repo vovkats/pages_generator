@@ -20,7 +20,7 @@ p#notice
   .content-label
     |Content
   .processed_content
-    = @page.processed_content
+    = sanitize(@page.processed_content, tags: %w(b i a), attributes: %w(href) )
 
 .add-pages
   = link_to 'Add page',  add_page_path(@page.id, @page.name, @page.path)
