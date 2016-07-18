@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   root 'pages#index'
-  get '/pages' => 'pages#index'
 
   get '*page_name/edit' => 'pages#edit', as: :page_edit
 
@@ -14,8 +13,6 @@ Rails.application.routes.draw do
   delete '*page_name' => 'pages#destroy'
 
   post '/' => 'pages#create'
-
-  resources :pages
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

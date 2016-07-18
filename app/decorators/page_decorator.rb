@@ -5,8 +5,7 @@ class PageDecorator < Draper::Decorator
     content = bold(self.content)
     content = italic(content)
     content = link(content)
-    content = br(content)
-    content.html_safe
+    br(content)
   end
 
   private
