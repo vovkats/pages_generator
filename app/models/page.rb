@@ -6,8 +6,8 @@ class Page < ActiveRecord::Base
 
   scope :root_pages, -> { where(root_id: nil) }
 
-  # validates :name, presence: true
-  # validate :page_name
+  validates :name, presence: true
+  validate :page_name, on: :create
 
   serialize :path, Hash
 
@@ -22,10 +22,14 @@ class Page < ActiveRecord::Base
   private
 
   def page_name
-    return true unless root_id
-
-    if parent.sub_pages.where(name: name).present?
-      errors[:name] << 'name must be uniq'
+    if root_id
+      if parent.sub_pages.where(name: name).present?
+        errors[:name] << 'Root page already has parent page with this name'
+      end
+    else
+      if Page.root_pages.where(name: name).present?
+        errors[:name] << 'Root page must have uniq name'
+      end
     end
   end
 end
