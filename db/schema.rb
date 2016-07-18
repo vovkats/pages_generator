@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160717063409) do
+ActiveRecord::Schema.define(version: 20160718152054) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "pages", force: :cascade do |t|
     t.string   "name"
@@ -19,12 +22,11 @@ ActiveRecord::Schema.define(version: 20160717063409) do
     t.integer  "root_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "slug"
     t.text     "path"
     t.string   "title"
   end
 
-  add_index "pages", ["name", "root_id"], name: "index_pages_on_name_and_root_id"
-  add_index "pages", ["name"], name: "index_pages_on_name"
+  add_index "pages", ["name", "root_id"], name: "index_pages_on_name_and_root_id", using: :btree
+  add_index "pages", ["name"], name: "index_pages_on_name", using: :btree
 
 end
