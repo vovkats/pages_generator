@@ -48,6 +48,22 @@ describe Page, type: :model do
       it { expect(@page).to be_invalid }
     end
 
+    context 'when name contain reserved word "add"' do
+      before do
+        page.name = 'add'
+      end
+
+      it { is_expected.to be_invalid }
+    end
+
+    context 'when name contain reserved word "edit"' do
+      before do
+        page.name = 'edit'
+      end
+
+      it { is_expected.to be_invalid }
+    end
+
     context 'when title is blank' do
       before { page.title = '' }
 

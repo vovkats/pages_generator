@@ -3,7 +3,8 @@ class Page < ActiveRecord::Base
 
   scope :root_pages, -> { where(root_id: nil) }
 
-  validates :name, presence: true, format: { with: /\A[[:alnum:]]+\z/i}
+  validates :name, presence: true, format: { with: /\A[[:alnum:]]+\z/i},
+                                   exclusion: { :in => %w(add edit) }
   validate :page_name, on: :create
 
   validates :title, presence: true
