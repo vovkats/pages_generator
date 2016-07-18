@@ -59,5 +59,41 @@ describe Page, type: :model do
 
       it { is_expected.to be_invalid }
     end
-  end  
+  end
+
+  describe '#main?' do
+    let(:root_page)  { FactoryGirl.create(:page, root_id: nil) }
+    let(:child_page) { FactoryGirl.create(:page, root_id: root_page.id)}
+
+    context 'when page has not parent' do
+
+      it 'returns true' do
+        expect(root_page.main?).to be_truthy
+      end
+    end
+
+    context 'when page has parent' do
+      it 'returns false' do
+        expect(child_page.main?).to be_falsey
+      end
+    end
+  end
+
+  describe '#parent?' do
+    let(:root_page)  { FactoryGirl.create(:page, root_id: nil) }
+    let(:child_page) { FactoryGirl.create(:page, root_id: root_page.id)}
+
+    context 'when page has not parent' do
+
+      it 'returns false' do
+        expect(root_page.parent).to be_falsey
+      end
+    end
+
+    context 'when page has parent' do
+      it 'returns false' do
+        expect(child_page.parent).to be_truthy
+      end
+    end
+  end
 end
