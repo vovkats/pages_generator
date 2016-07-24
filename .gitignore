@@ -17,5 +17,6 @@
 /tmp
 .idea
 config/database.yml
+config/secrets.yml
 .bundle
 .rspec
