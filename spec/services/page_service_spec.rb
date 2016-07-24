@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe PageService do
 
-  before(:all) do
+  before do
     page = create(:page, name: 'page1')
     sub_page = create(:page, name: 'page2', root_id: page.id)
     @sub_sub_page = create(:page, name: 'page3', root_id: sub_page.id)
@@ -23,10 +23,6 @@ describe PageService do
 
     context 'when page url contains wrong page name' do
 
-      after do
-        @page_names.shift
-      end
-
       it 'returns PageNotFound' do
         @page_names.unshift('fakename')
         page_service = PageService.new(@page_names)
@@ -35,11 +31,6 @@ describe PageService do
     end
 
     context 'when page url contains extra page names' do
-
-      after do
-        @page_names.pop
-        @page_names.pop
-      end
 
       it 'returns PageNotFound' do
         @page_names << 'fakename'

@@ -9,5 +9,6 @@ FactoryGirl.define do
     title Faker::Lorem.sentence
     content Faker::Lorem.paragraph
     root_id nil
+    path { PathService.form_path(self) }
   end
 end
