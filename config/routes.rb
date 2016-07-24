@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   get '*page_name/edit' => 'pages#edit', as: :page_edit
 
-  get '(*page_name)/add' => 'pages#add', as: :page_add
+  get '(*page_name)/add' => 'pages#new', as: :page_add
 
   get '*page_name' => 'pages#show', as: :page_show
 

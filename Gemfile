@@ -36,6 +36,12 @@ gem 'slim', '3.0.7'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'rspec-rails', '~> 3.4'
+  gem 'database_cleaner', '1.5.3'
+  gem 'faker', '1.6.3'
+  gem 'factory_girl_rails', '4.7.0'
+  gem 'pry-byebug', '3.4.0'
+  gem 'pry-rails', '0.3.4'
 end
 
 group :development do
@@ -44,9 +50,6 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
-  gem 'pry-byebug', '3.4.0'
-  gem 'pry-rails', '0.3.4'
   gem 'quiet_assets', '1.1.0'
 end
 

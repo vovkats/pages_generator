@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :find_page, only: [:show, :edit, :update, :destroy, :add]
+  before_action :find_page, only: [:show, :edit, :update, :destroy, :new]
 
   def index
     tree_service = TreeService.new(Page.all)
@@ -14,14 +14,9 @@ class PagesController < ApplicationController
     render 'pages/show'
   end
 
-  def add
-    @page = @page.sub_pages.build if @page.id
-
-    render 'pages/new'
-  end
-
   def new
-    @page = Page.new
+    @page = @page.sub_pages.build if @page.id
+    render 'pages/new'
   end
 
   def edit

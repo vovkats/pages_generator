@@ -1,7 +1,7 @@
 class TreeService
   attr_reader :tree
 
-  def initialize(pages, condition = {})
+  def initialize(pages)
     @pages = pages
     @tree = {}
   end
