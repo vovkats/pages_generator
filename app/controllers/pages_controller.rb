@@ -1,27 +1,16 @@
 class PagesController < ApplicationController
   before_action :find_page, only: [:show, :edit, :update, :destroy, :new]
+  before_action :prepare_hash_tree, only: [:index, :show]
 
-  def index
-    tree_service = TreeService.new(Page.all)
-    tree_service.form_tree
-    @root_pages = tree_service.tree
-  end
+  def index; end
 
-  def show
-    tree_service = TreeService.new(Page.all)
-    tree_service.form_tree
-    @root_pages = tree_service.tree
-    render 'pages/show'
-  end
+  def show; end
 
   def new
     @page = @page.sub_pages.build if @page.id
-    render 'pages/new'
   end
 
-  def edit
-    render 'pages/edit'
-  end
+  def edit; end
 
   def create
     @page = Page.new(page_params.merge(name: params[:page][:name]))
@@ -39,7 +28,7 @@ class PagesController < ApplicationController
     if @page.update(page_params)
       redirect_to PathService.show_path(@page.id, @page.name, @page.path), notice: 'Page was successfully updated.'
     else
-      render 'pages/edit'
+      render :edit
     end
   end
 
@@ -65,5 +54,11 @@ class PagesController < ApplicationController
 
     def page_params
       params.require(:page).permit(:title, :content, :root_id)
+    end
+
+    def prepare_hash_tree
+      tree_service = TreeService.new(Page.all)
+      tree_service.form_tree
+      @root_pages = tree_service.tree
     end
 end
